@@ -32,7 +32,7 @@ public class HomeController {
 	@GetMapping("/query-string")
 	@ResponseBody
 	public String query_string(@RequestParam("id") Long id, @RequestParam("slug") String slug) {		
-		return "El parametro id es:".concat(id.toString()).concat(" | ").concat(slug);
+		return "El parametro id es: ".concat(id.toString()).concat(" | ").concat(slug);
 	}
 	
 	@Value("${elio.valores.nombre}")
