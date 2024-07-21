@@ -2,6 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 	<head>
 		<meta charset="utf-8"/>		
+		<link rel="stylesheet" th:href="@{/css/estilos.css}"		
 	</head>
   <body>
     <h3>Recursos estaticos</h3>
@@ -12,5 +13,7 @@
     <img th:src="@{/images/mascota.png}" /> 
     <img th:src="@{/images/pasear_perro.png}" /> 
     <img th:src="@{/images/tienda_animales.png}" />
+    
+    <div th:replace="layout/frontend :: scripts"></div>
   </body>
 </html>
