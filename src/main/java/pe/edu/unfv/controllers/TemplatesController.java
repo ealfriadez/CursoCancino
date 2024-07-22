@@ -48,4 +48,19 @@ public class TemplatesController {
 	public String estaticos(Model model) {
 		return "templates/estaticos";
 	}
+	
+	@GetMapping("/estaticos2")
+	public String estaticos2(Model model) {
+		return "templates/estaticos2";
+	}
+	
+	@GetMapping("/ajax")
+	public String ajax(Model model) {
+		return "templates/ajax";
+	}
+	
+	@GetMapping("/peticion")
+	public String peticion(Model model) {
+		return "templates/peticion";
+	}
 }

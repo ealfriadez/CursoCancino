@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-	<head>
-		<meta charset="utf-8"/>		
-		<link rel="stylesheet" th:href="@{/css/estilos.css}"		
+	<head  th:replace="~{layout/frontend :: head(~{::title}, ~{::link})}">	
 	</head>
-  <body>
-    <h3>Recursos estaticos</h3>
-    <img th:src="@{/images/gatito.png}" /> 
-    <img th:src="@{/images/cuidado_mascotas.png}" /> 
-    <img th:src="@{/images/lista.png}" />
-    <hr/> 
-    <img th:src="@{/images/mascota.png}" /> 
-    <img th:src="@{/images/pasear_perro.png}" /> 
-    <img th:src="@{/images/tienda_animales.png}" />
-    
-    <div th:replace="layout/frontend :: scripts"></div>
+  <body>  
+	   
+	<div class="container" >
+		<header th:replace="~{layout/frontend :: cabecero}"></header>
+		<div th:replace="~{layout/frontend :: menu}"></div>
+	</div>  
+	<main class="container">
+		<h1>Probando plantilla</h1>
+		<img th:src="@{/images/logo.png}" />
+	</main>
+        
+    <footer th:replace="~{layout/frontend :: footer}"></footer>
+    <div th:replace="~{layout/frontend :: scripts}"></div>
   </body>
 </html>
