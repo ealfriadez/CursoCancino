@@ -55,7 +55,11 @@
  
 
  function carga_ajax_get(ruta, valor, div) {
-     $.get(ruta, { valor: valor }, function(resp) {
+	console.log("mensaje stándard por la consola");
+	console.log(ruta, "color: orange; font-family:Impact");
+	console.log(valor, "color: orange; font-family:Impact");
+	console.log(div, "color: orange; font-family:Impact");
+     $.get(ruta, { valor: valor }, function(resp) {		
          $("#" + div + "").html(resp);
      });
      return false;

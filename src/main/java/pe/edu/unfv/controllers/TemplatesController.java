@@ -63,4 +63,9 @@ public class TemplatesController {
 	public String peticion(Model model) {
 		return "templates/peticion";
 	}
+	
+	@GetMapping("/fancybox")
+	public String fancybox(Model model) {
+		return "templates/fancybox";
+	}
 }
