@@ -5,7 +5,7 @@ import java.util.Objects;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotEmpty;
 
-public class Usuario2Model {
+public class Usuario3Model {
 
 	@NotEmpty(message = "esta vacio")
 	private String username;
@@ -15,11 +15,21 @@ public class Usuario2Model {
 	@NotEmpty(message = "esta vacio")
 	private String password;	
 	
-	public Usuario2Model() {
+	private PaisModel pasiId;	
+	
+	public PaisModel getPasiId() {
+		return pasiId;
+	}
+
+	public void setPasiId(PaisModel pasiId) {
+		this.pasiId = pasiId;
+	}
+	
+	public Usuario3Model() {
 		super();
 	}
 
-	public Usuario2Model(String username, String correo, String password) {
+	public Usuario3Model(String username, String correo, String password) {
 		super();
 		this.username = username;
 		this.correo = correo;
@@ -63,7 +73,7 @@ public class Usuario2Model {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Usuario2Model other = (Usuario2Model) obj;
+		Usuario3Model other = (Usuario3Model) obj;
 		return Objects.equals(correo, other.correo) && Objects.equals(password, other.password)
 				&& Objects.equals(username, other.username);
 	}	
