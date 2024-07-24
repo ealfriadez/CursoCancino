@@ -14,12 +14,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import pe.edu.unfv.models.InteresesModel;
 import pe.edu.unfv.models.PaisModel;
 import pe.edu.unfv.models.Usuario2Model;
 import pe.edu.unfv.models.Usuario3Model;
+import pe.edu.unfv.models.UsuarioCheckboxModel;
 import pe.edu.unfv.models.UsuarioModel;
+import pe.edu.unfv.models.UsuarioUploadModel;
 
 @Controller
 @RequestMapping("/formularios")
@@ -81,64 +85,121 @@ public class FormulariosControllers {
 		model.addAttribute("usuario", new Usuario2Model());
 		return "formularios/validaciones";
 	}
-	
+
 	@PostMapping("/validaciones")
-	public String validaciones_post(
-			@Valid Usuario2Model usuario, 
-			BindingResult result,
-			Model model) {
+	public String validaciones_post(@Valid Usuario2Model usuario, BindingResult result, Model model) {
 
 		if (result.hasErrors()) {
 			Map<String, String> errores = new HashMap<>();
-			result.getFieldErrors()
-			.forEach(error -> {
-				errores.put(error.getField(), 
+			result.getFieldErrors().forEach(error -> {
+				errores.put(error.getField(),
 						"El campo ".concat(error.getField()).concat(" ").concat(error.getDefaultMessage()));
 			});
-			
+
 			model.addAttribute("errores", errores);
 			model.addAttribute("usuario", usuario);
 			return "formularios/validaciones";
 		}
-		
+
 		model.addAttribute("usuario", usuario);
 		return "formularios/validaciones_result";
 	}
-	
+
 	// Formulario de select dinamicos
-		@GetMapping("/select_dinamico")
-		public String select_dinamico(Model model) {			
-			
-			model.addAttribute("usuario", new Usuario3Model());
+	@GetMapping("/select_dinamico")
+	public String select_dinamico(Model model) {
+
+		model.addAttribute("usuario", new Usuario3Model());
+		return "formularios/select_dinamico";
+	}
+
+	@PostMapping("/select_dinamico")
+	public String select_dinamico_post(@Valid Usuario3Model usuario, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			Map<String, String> errores = new HashMap<>();
+			result.getFieldErrors().forEach(error -> {
+				errores.put(error.getField(),
+						"El campo ".concat(error.getField()).concat(" ").concat(error.getDefaultMessage()));
+			});
+
+			model.addAttribute("errores", errores);
+			model.addAttribute("usuario", usuario);
 			return "formularios/select_dinamico";
 		}
-		@PostMapping("/select_dinamico")
-		public String select_dinamico_post(
-				@Valid Usuario3Model usuario, 
-				BindingResult result,
-				Model model) {
 
-			if (result.hasErrors()) {
-				Map<String, String> errores = new HashMap<>();
-				result.getFieldErrors()
-				.forEach(error -> {
-					errores.put(error.getField(), 
-							"El campo ".concat(error.getField()).concat(" ").concat(error.getDefaultMessage()));
-				});
-				
-				model.addAttribute("errores", errores);
-				model.addAttribute("usuario", usuario);
-				return "formularios/select_dinamico";
-			}
-			
+		model.addAttribute("usuario", usuario);
+		return "formularios/select_dinamico_result";
+	}
+
+	// Formulario de select dinamicos
+	@GetMapping("/checkbox")
+	public String checkbox(Model model) {
+
+		model.addAttribute("usuario", new UsuarioCheckboxModel());
+		return "formularios/checkbox";
+	}
+
+	@PostMapping("/checkbox")
+	public String checkbox_post(@Valid UsuarioCheckboxModel usuario, BindingResult result, Model model) {
+
+		if (result.hasErrors()) {
+			Map<String, String> errores = new HashMap<>();
+			result.getFieldErrors().forEach(error -> {
+				errores.put(error.getField(),
+						"El campo ".concat(error.getField()).concat(" ").concat(error.getDefaultMessage()));
+			});
+
+			model.addAttribute("errores", errores);
 			model.addAttribute("usuario", usuario);
-			return "formularios/select_dinamico_result";
+			return "formularios/checkbox";
+		}
+
+		model.addAttribute("usuario", usuario);
+		return "formularios/checkbox_result";
+	}
+
+	// Formulario ejemplo de mensajes flash
+	@GetMapping("/flash")
+	public String flash(Model model) {
+		
+		model.addAttribute("usuario", new UsuarioModel());
+		return "formularios/flash";
+	}
+	@PostMapping("/flash")
+	public String flash_post(UsuarioModel usuario, RedirectAttributes flash) {
+		
+		flash.addFlashAttribute("clase", "danger");
+		flash.addFlashAttribute("mensaje", "Ejemplo de mensaje flash con ñandu");
+		
+		return "redirect:/formularios/flash-respuesta";		
+	}
+	@GetMapping("/flash-respuesta")
+	public String flash_respuesta() {
+		
+		return "formularios/flash_respuesta";
+	}
+	
+	// Formulario upload files
+		@GetMapping("/upload")
+		public String upload(Model model) {
+			
+			model.addAttribute("usuario", new UsuarioUploadModel());
+			return "formularios/upload";
 		}
 		
+		
+		
+		
+		
+		
+		
+		
+
 	// Formulario de setGenericos
 	@ModelAttribute
 	public void setGenericos(Model model) {
-		
+
 		List<PaisModel> paisModels = new ArrayList<>();
 		paisModels.add(new PaisModel(1, "United States"));
 		paisModels.add(new PaisModel(2, "China"));
@@ -158,7 +219,20 @@ public class FormulariosControllers {
 		paisModels.add(new PaisModel(16, "Guatemala"));
 		paisModels.add(new PaisModel(17, "Japan"));
 		paisModels.add(new PaisModel(18, "Monaco"));
-		paisModels.add(new PaisModel(19, "United Kingdom"));			
+		paisModels.add(new PaisModel(19, "United Kingdom"));
 		model.addAttribute("paisModels", paisModels);
+
+		List<InteresesModel> interesesModels = new ArrayList<>();
+		interesesModels.add(new InteresesModel(1, "Musica"));
+		interesesModels.add(new InteresesModel(2, "Deporte"));
+		interesesModels.add(new InteresesModel(3, "Programacion"));
+		interesesModels.add(new InteresesModel(4, "Viajes"));
+		interesesModels.add(new InteresesModel(5, "Leer"));
+		interesesModels.add(new InteresesModel(6, "Redactar"));
+		interesesModels.add(new InteresesModel(7, "Bailar"));
+		interesesModels.add(new InteresesModel(8, "Comprar"));
+		interesesModels.add(new InteresesModel(9, "Economia"));
+		interesesModels.add(new InteresesModel(10, "Politica"));
+		model.addAttribute("interesesModels", interesesModels);
 	}
 }
