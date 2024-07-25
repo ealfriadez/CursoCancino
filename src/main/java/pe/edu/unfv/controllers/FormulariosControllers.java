@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
@@ -162,39 +163,62 @@ public class FormulariosControllers {
 	// Formulario ejemplo de mensajes flash
 	@GetMapping("/flash")
 	public String flash(Model model) {
-		
+
 		model.addAttribute("usuario", new UsuarioModel());
 		return "formularios/flash";
 	}
+
 	@PostMapping("/flash")
 	public String flash_post(UsuarioModel usuario, RedirectAttributes flash) {
-		
+
 		flash.addFlashAttribute("clase", "danger");
 		flash.addFlashAttribute("mensaje", "Ejemplo de mensaje flash con ñandu");
-		
-		return "redirect:/formularios/flash-respuesta";		
+
+		return "redirect:/formularios/flash-respuesta";
 	}
+
 	@GetMapping("/flash-respuesta")
 	public String flash_respuesta() {
-		
+
 		return "formularios/flash_respuesta";
 	}
-	
+
 	// Formulario upload files
-		@GetMapping("/upload")
-		public String upload(Model model) {
-			
-			model.addAttribute("usuario", new UsuarioUploadModel());
+	@GetMapping("/upload")
+	public String upload(Model model) {
+
+		model.addAttribute("usuario", new UsuarioUploadModel());
+		return "formularios/upload";
+	}
+	
+	@PostMapping("/upload")
+	public String upload_post(
+								@Valid UsuarioUploadModel usuarioUploadModel, 
+								BindingResult result, 
+								Model model,
+								@RequestParam("archivoImagen") MultipartFile multipartFile,
+								RedirectAttributes flash) {
+		
+		if (result.hasErrors()) {
+			Map<String, String> errores = new HashMap<>();
+			result.getFieldErrors().forEach(error -> {
+				errores.put(error.getField(),
+						"El campo ".concat(error.getField()).concat(" ").concat(error.getDefaultMessage()));
+			});
+
+			model.addAttribute("errores", errores);
+			model.addAttribute("usuarioUploadModel", usuarioUploadModel);
 			return "formularios/upload";
 		}
 		
+		if(multipartFile.isEmpty()) {
+			flash.addFlashAttribute("clase", "danger");
+			flash.addFlashAttribute("mensaje", "El archivo para la foto es obligatorio, debe ser JPG|JPEG|PNG");
+			return "redirect:/formularios/upload";
+		}
 		
-		
-		
-		
-		
-		
-		
+		return "";
+	}
 
 	// Formulario de setGenericos
 	@ModelAttribute
