@@ -13,9 +13,7 @@
 	</div>
 	<main class="container">
 		<h1>Formulario upload file</h1>
-		<div th:if="${mensaje!=null}" th:class="'alert alert-'+${clase}" th:text="${mensaje}"></div>
-		<span th:text="${mensaje}"></span>
-		<button th:if="${mensaje!}"
+		
 		<form name="form" th:object="${usuario}" th:action="@{/formularios/upload}" method="POST"
 			enctype="multipart/form-data">
 			<div class="form-group">
@@ -39,6 +37,10 @@
 			<div class="form-group">
 				<label>Foto</label>
 				<input type="file" id="archivoImagen" name="archivoImagen" class="form-control" />
+			</div>
+			<div th:if="${mensaje!=null}" th:class="'alert alert-'+${clase}+' alert-dismissible fade show'">
+				<span th:text="${mensaje}"></span>
+				<button th:if="${mensaje!=null}" type="button" class="btn-close" data-bs-dismiss="alert" aria-label="close"></button>
 			</div>
 			<hr />
 			<a href="javascript:void(0);" class="btn btn-info" onclick="document.form.submit();">Enviar</a>

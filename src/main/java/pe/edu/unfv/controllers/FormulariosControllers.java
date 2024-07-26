@@ -25,6 +25,7 @@ import pe.edu.unfv.models.Usuario3Model;
 import pe.edu.unfv.models.UsuarioCheckboxModel;
 import pe.edu.unfv.models.UsuarioModel;
 import pe.edu.unfv.models.UsuarioUploadModel;
+import pe.edu.unfv.util.Utilidades;
 
 @Controller
 @RequestMapping("/formularios")
@@ -217,6 +218,9 @@ public class FormulariosControllers {
 			return "redirect:/formularios/upload";
 		}
 		
+		if(!multipartFile.isEmpty()) {
+			String nombreImagen = Utilidades.guardarArchivo(multipartFile, null)
+		}
 		return "";
 	}
 
