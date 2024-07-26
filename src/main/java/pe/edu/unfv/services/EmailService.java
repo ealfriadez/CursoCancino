@@ -1,8 +1,12 @@
 package pe.edu.unfv.services;
 
+import java.util.Properties;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Primary;
 import org.springframework.stereotype.Service;
+
+import jakarta.mail.Session;
 
 @Service
 @Primary
@@ -19,5 +23,14 @@ public class EmailService {
 	
 	public void sendMail(String mail, String asunto) {
 		
+		Properties props = new Properties();
+		props.put("mail.smtp.auth", "true");
+		props.put("mail.smtp.starttls.enable", "true");
+		props.put("mail.smtp.host", this.smtp_server);
+		props.put("mail.smtp.port", this.smtp_port);
+		
+		Session session = Session.getInstance(props, new jakarta.mail.Authenticator() {
+			
+		});
 	}
 }
