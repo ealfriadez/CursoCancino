@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -31,6 +32,12 @@ import pe.edu.unfv.util.Utilidades;
 @RequestMapping("/formularios")
 public class FormulariosControllers {
 
+	@Value("${elio.valores.ruta_upload}")
+	private String ruta_upload;
+	
+	@Value("${elio.valores.base_url_upload}")
+	private String base_url_upload;
+	
 	@GetMapping
 	public String home() {
 		return "formularios/home";
@@ -190,7 +197,7 @@ public class FormulariosControllers {
 
 		model.addAttribute("usuario", new UsuarioUploadModel());
 		return "formularios/upload";
-	}
+	}	
 	
 	@PostMapping("/upload")
 	public String upload_post(
@@ -219,9 +226,19 @@ public class FormulariosControllers {
 		}
 		
 		if(!multipartFile.isEmpty()) {
-			String nombreImagen = Utilidades.guardarArchivo(multipartFile, null)
+			String nombreImagen = Utilidades.guardarArchivo(multipartFile, this.ruta_upload+"udemy/");
+			if(nombreImagen.equals("no")) {
+				flash.addFlashAttribute("clase", "danger");
+				flash.addFlashAttribute("mensaje", "El archivo para la foto no es valido, debe ser JPG|JPEG|PNG");
+				return "redirect:/formularios/upload";
+			}
+			if(!nombreImagen.isEmpty()) {
+				usuarioUploadModel.setFoto(nombreImagen);
+			}
 		}
-		return "";
+		
+		model.addAttribute("usuario", usuarioUploadModel);
+		return "formularios/upload_respuesta";
 	}
 
 	// Formulario de setGenericos
@@ -262,5 +279,7 @@ public class FormulariosControllers {
 		interesesModels.add(new InteresesModel(9, "Economia"));
 		interesesModels.add(new InteresesModel(10, "Politica"));
 		model.addAttribute("interesesModels", interesesModels);
+		
+		model.addAttribute("base_url_upload", this.base_url_upload);
 	}
 }
