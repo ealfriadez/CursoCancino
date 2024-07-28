@@ -15,9 +15,7 @@ public class CursoCancinoApplication {
 	@Bean
 	public RestTemplate restTemplate() {
 		
-		
-		return null;
-		
+		return new RestTemplate();		
 	}
 
 }

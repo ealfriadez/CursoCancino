@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/frontend :: head(~{::title}, ~{::link})}">
+	<link th:href="@{/css/estilos.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="container">
+		<header th:replace="~{layout/frontend :: cabecero}"></header>
+		<div th:replace="~{layout/frontend :: menu}"></div>
+	</div>
+	<main class="container">
+		<h1>Ejemplo Objeto Rest</h1>
+		<table class="table table-bordered table-striped table-hover">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>NAME</th>
+					<th>USERNAME</th>
+					<th>EMAIL</th>
+					<th>STREET</th>
+					<th>SUITE</th>
+					<th>CITY</th>
+					<th>ZIPCODE</th>
+					<th>LATITUD</th>
+					<th>LONGITUD</th>
+					<th>COMPANY</th>
+					<th>CATCHPHRASE</th>
+					<th>BS</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dato:${datos}">
+					<td th:text="${dato.id}"></td>	
+					<td th:text="${dato.name}"></td>
+					<td th:text="${dato.username}"></td>	
+					<td th:text="${dato.email}"></td>		
+					<td th:text="${dato.address.street}"></td>
+					<td th:text="${dato.address.suite}"></td>
+					<td th:text="${dato.address.city}"></td>
+					<td th:text="${dato.address.zipcode}"></td>
+					<td th:text="${dato.address.geo.lat}"></td>
+					<td th:text="${dato.address.geo.lng}"></td>
+					<td th:text="${dato.company.name}"></td>
+					<td th:text="${dato.company.catchPhrase}"></td>
+					<td th:text="${dato.company.bs}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+
+	<footer th:replace="~{layout/frontend :: footer}"></footer>
+	<div th:replace="~{layout/frontend :: scripts}"></div>
+</body>
+
+</html>
