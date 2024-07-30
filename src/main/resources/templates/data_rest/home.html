@@ -44,8 +44,8 @@
 					<td th:text="${dato.address.geo.lat}"></td>
 					<td th:text="${dato.address.geo.lng}"></td>
 					<td th:text="${dato.company.name}"></td>
-					<td th:text="${dato.company.catchPhrase}"></td>
-					<td th:text="${dato.company.bs}"></td>
+					<td th:text="${#strings.substring(dato.company.catchPhrase,0,10)}+'...'"></td>					
+					<td th:text="${#strings.substring(dato.company.bs,0,10)}+'...'"></td>
 				</tr>
 			</tbody>
 		</table>
