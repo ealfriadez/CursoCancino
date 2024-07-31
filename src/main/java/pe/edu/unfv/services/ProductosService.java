@@ -20,4 +20,8 @@ public class ProductosService {
 		
 		return this.repository.findAll();		
 	}
+	
+	public void guardar(ProductosModel producto) {
+		this.repository.save(producto);
+	}
 }
