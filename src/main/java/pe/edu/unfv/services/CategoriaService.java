@@ -1,6 +1,7 @@
 package pe.edu.unfv.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
@@ -19,5 +20,30 @@ public class CategoriaService {
 	public List<CategoriaModel> listar(){		
 		
 		return this.repository.findAll();		
+	}
+	
+	public void guardar(CategoriaModel categoriaModel) {
+		
+		this.repository.save(categoriaModel);
+	}
+	
+	public CategoriaModel buscarPorId(Integer id) {
+		Optional<CategoriaModel> optional = this.repository.findById(id);
+		if (optional.isPresent()) {
+			return optional.get();
+		}
+		return null;
+	}
+	
+	public boolean buscarPorSlug(String slug){
+		if (this.repository.existsBySlug(slug)) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+	
+	public void eliminar(Integer id) {
+		this.repository.deleteById(id);
 	}
 }

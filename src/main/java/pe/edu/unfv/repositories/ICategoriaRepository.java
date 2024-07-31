@@ -6,4 +6,5 @@ import pe.edu.unfv.models.CategoriaModel;
 
 public interface ICategoriaRepository extends JpaRepository<CategoriaModel, Integer>{
 
+	public boolean existsBySlug(String slug);
 }
