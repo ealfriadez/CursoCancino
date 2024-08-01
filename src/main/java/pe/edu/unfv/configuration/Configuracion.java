@@ -16,6 +16,6 @@ public class Configuracion implements WebMvcConfigurer{
 		//WebMvcConfigurer.super.addResourceHandlers(registry);
 		
 		registry.addResourceHandler("/local/**")
-		.addResourceLocations("file: " + this.ruta_upload);
+		.addResourceLocations("file:" + this.ruta_upload + "/productos_image");
 	}	
 }

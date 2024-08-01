@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Primary;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 import pe.edu.unfv.models.CategoriaModel;
@@ -19,8 +20,14 @@ public class CategoriaService {
 	
 	public List<CategoriaModel> listar(){		
 		
+		return this.repository.findAll(Sort.by("id").descending());		
+	}
+	
+	public List<CategoriaModel> listar_respaldo(){		
+		
 		return this.repository.findAll();		
 	}
+	
 	
 	public void guardar(CategoriaModel categoriaModel) {
 		

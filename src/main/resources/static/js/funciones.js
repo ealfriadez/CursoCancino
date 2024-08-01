@@ -96,6 +96,5 @@
      return ((key >= 48 && key <= 57) || key == 8 || key == 127 || key == 9 || key == 0);
  }
  window.onload = function() {
-     muestraReloj();
-
+    muestraReloj();	
  };

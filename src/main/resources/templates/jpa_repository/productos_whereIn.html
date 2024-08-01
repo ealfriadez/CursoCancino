@@ -13,7 +13,7 @@
 		<div th:replace="~{layout/frontend :: menu}"></div>
 	</div>
 	<main class="container">
-		<h1>Productos</h1>
+		<h1>Productos where in</h1>
 		<div th:if="${mensaje!=null}" th:class="'alert alert-'+${clase}+' alert-dismissible fade show'">
 			<span th:text="${mensaje}"></span>
 			<button th:if="${mensaje!=null}" type="button" class="btn-close" data-bs-dismiss="alert"
