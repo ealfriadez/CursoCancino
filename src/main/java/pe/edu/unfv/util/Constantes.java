@@ -13,4 +13,5 @@ public class Constantes {
 	public static final String PARAM_2="content e-mail";
 	public static final String PNG="png";
 	public static final Path TEMPLATE_PATH = Paths.get("src/main/resources/templates/email/template/email_template.html");
+	public static final Integer CANTIDAD_POR_PAGINA=3;
 }

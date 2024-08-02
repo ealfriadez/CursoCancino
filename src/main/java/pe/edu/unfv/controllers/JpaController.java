@@ -1,11 +1,16 @@
 package pe.edu.unfv.controllers;
 
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +30,7 @@ import pe.edu.unfv.models.CategoriaModel;
 import pe.edu.unfv.models.ProductosModel;
 import pe.edu.unfv.services.CategoriaService;
 import pe.edu.unfv.services.ProductosService;
+import pe.edu.unfv.util.Constantes;
 import pe.edu.unfv.util.Utilidades;
 
 @Controller
@@ -41,6 +47,9 @@ public class JpaController {
 	
 	@Value("${elio.valores.ruta_upload}")
 	private String ruta_upload;
+	
+	@Value("${server.servlet.context-path}")
+	private String context_path;
 	
 	@GetMapping("")
 	public String home(Model model) {
@@ -301,8 +310,25 @@ public class JpaController {
 	@GetMapping("/productos_whereIn")
 	public String productos_whereIn(Model model) {
 		
-		model.addAttribute("datos", this.productosService.listar());
+		List<CategoriaModel> lstCategoria = new ArrayList<>();
+		lstCategoria.add(this.categoriaService.buscarPorId(1));
+		lstCategoria.add(this.categoriaService.buscarPorId(3));
+		
+		model.addAttribute("datos", this.productosService.listar_whereIn(lstCategoria));
 		return "jpa_repository/productos_whereIn";
+	}
+	
+	@GetMapping("/productos_paginacion")
+	public String productos_paginacion(
+			@RequestParam(value = "page", required = false) Integer page,
+			Model model) {
+		
+		Pageable pageable = PageRequest.of((page == null) ? 0 : page, 
+				Constantes.CANTIDAD_POR_PAGINA, Sort.by("id").descending());				
+		
+		model.addAttribute("datos", this.productosService.listar_paginacion(pageable));
+		model.addAttribute("paginacion", context_path.replace("/", "").concat("/jpa-repository/productos_paginacion"));
+		return "jpa_repository/productos_paginacion";
 	}
 	
 	
