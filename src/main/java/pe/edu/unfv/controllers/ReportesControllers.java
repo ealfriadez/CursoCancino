@@ -1,22 +1,34 @@
 package pe.edu.unfv.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
+import org.thymeleaf.context.Context;
+import org.thymeleaf.spring6.SpringTemplateEngine;
 
-import jakarta.servlet.ServletContext;
-import jakarta.servlet.http.HttpServletRequest;
-import jakarta.servlet.http.HttpServletResponse;
+import pe.edu.unfv.services.CategoriaMongoService;
+import pe.edu.unfv.services.report.DataReport;
+import pe.edu.unfv.services.report.DocumentGenerator;
 
 @Controller
 @RequestMapping("/reportes")
 public class ReportesControllers {
 
+	@Autowired
+	private DocumentGenerator documentGenerator;
+	
+	@Autowired
+	private SpringTemplateEngine springTemplateEngine;
+	
+	@Autowired
+	private DataReport dataReport;
+	
+	@Autowired
+	private CategoriaMongoService categoriaMongoService;	
+	
 	@GetMapping("")
 	public String home(Model model) {
 		return "reportes/home";
@@ -25,18 +37,19 @@ public class ReportesControllers {
 	//===================================================
 	//=======================PDF=========================
 	//===================================================
-	private final TemplateEngine templateEngine;
 	
-	public ReportesControllers(TemplateEngine templateEngine) {
-		this.templateEngine = templateEngine;
+	@PostMapping("/categorias")
+	public String categorias() {
+		
+		String finalHtml = null;
+		
+		Context context = dataReport.setData(this.categoriaMongoService.listar());
+		
+		finalHtml = springTemplateEngine.process("reportes/categorias", context);
+		
+		documentGenerator.htmlToPdf(finalHtml);
+		
+		return "Success";
 	}
 	
-	@Autowired
-	private ServletContext servletContext;
-	
-	@GetMapping("/pdf")
-	public ResponseEntity<?> productos_pdf(HttpServletRequest request, HttpServletResponse response){
-		WebContext context = new WebContext(request, response, this.servletContext);
-		context.setVariables("titulo", "PDF Dinamico desde Spring Boot");
-	}
 }
