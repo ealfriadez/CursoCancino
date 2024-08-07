@@ -2,6 +2,7 @@ package pe.edu.unfv.util;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.text.Normalizer;
 import java.util.Locale;
 import java.util.regex.Pattern;
@@ -75,4 +76,10 @@ public class Utilidades {
 		slug = EDGESDHASHES.matcher(slug).replaceAll("");
 		return slug.toLowerCase(Locale.ENGLISH);
 	}
+	
+	public static final String numberFormat(double value) {
+		DecimalFormat df = new DecimalFormat("###,###,###");
+		return df.format(value);
+	}
+
 }
