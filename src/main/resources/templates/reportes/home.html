@@ -17,15 +17,12 @@
 		<form name="form" th:object="${datos}" th:action="@{/reportes/pdf/categorias}" method="POST">
 			<a href="javascript:void(0);" class="btn btn-lg btn-outline-danger" id="liveAlertBtnPdf"
 				onclick="document.form.submit();"><i class="fa fa-file-pdf"></i></a><br /><br />
-			<a href="javascript:void(0);" class="btn btn-lg btn-outline-success" id="liveAlertBtnXls"
-				onclick="document.form.submit();"><i class="fa fa-file-excel"></i></a><br /><br />
-			<a href="javascript:void(0);" class="btn btn-lg btn-outline-warning" id="liveAlertBtnCsv"
-				onclick="document.form.submit();"><i class="fa fa-file-csv"></i></a><br />
 		</form>
 		<a href="javascript:void(0);" class="btn btn-lg btn-outline-success" id="liveAlertBtnXls"
-						th:href="@{/reportes/export-to-excel}"><i class="fa fa-file-excel"></i></a><br /><br />
-		
-		<br />
+			th:href="@{/reportes/export-to-excel}"><i class="fa fa-file-excel"></i></a><br /><br />
+		<a href="javascript:void(0);" class="btn btn-lg btn-outline-warning" id="liveAlertBtnCsv"
+			th:href="@{/reportes/export-to-csv}"><i class="fa fa-file-csv"></i></a>
+		<br /><br />
 	</main>
 
 	<footer th:replace="~{layout/frontend :: footer}"></footer>
