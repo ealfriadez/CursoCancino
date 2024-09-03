@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/frontend :: head(~{::title}, ~{::link})}">
+	<link th:href="@{/css/estilos.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<div class="container">
+		<header th:replace="~{layout/frontend :: cabecero}"></header>
+		<div th:replace="~{layout/frontend :: menu}"></div>
+	</div>
+	<main class="container">
+		<h1>Multiples Reportes</h1>
+		<hr />
+		<form name="form" th:object="${datos}" th:action="@{/reportes/pdf/categorias}" method="POST">
+			<a href="javascript:void(0);" class="btn btn-lg btn-outline-danger" id="liveAlertBtnPdf"
+				onclick="document.form.submit();"><i class="fa fa-file-pdf"></i></a><br /><br />
+		</form>
+		<a href="javascript:void(0);" class="btn btn-lg btn-outline-success" id="liveAlertBtnXls"
+			th:href="@{/reportes/export-to-excel}"><i class="fa fa-file-excel"></i></a><br /><br />
+		<a href="javascript:void(0);" class="btn btn-lg btn-outline-warning" id="liveAlertBtnCsv"
+			th:href="@{/reportes/export-to-csv}"><i class="fa fa-file-csv"></i></a>
+		<br /><br />
+	</main>
+
+	<footer th:replace="~{layout/frontend :: footer}"></footer>
+	<div th:replace="~{layout/frontend :: scripts}"></div>
+	<script type="text/javascript">
+		$('#liveAlertBtnPdf').click(function () {
+			alert("Se genero el reporte correctamente");
+		});
+
+		$('#liveAlertBtnXls').click(function () {
+			alert("Se genero el reporte correctamente");
+		});
+
+		$('#liveAlertBtnCsv').click(function () {
+			alert("Se genero el reporte correctamente");
+			/*Swal.fire({
+				title: "Reporte!",
+				text: "Generado correctamente!",
+				icon: "success"
+			});*/
+		});
+	</script>
+</body>
+
+</html>

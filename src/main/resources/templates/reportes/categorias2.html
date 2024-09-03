@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/frontend :: head(~{::title}, ~{::link})}">
+	<link th:href="@{/css/estilos.css}" rel="stylesheet">
+</head>
+
+<body>
+
+	<!--<div class="container">
+		<header th:replace="~{layout/frontend :: cabecero}"></header>
+		<div th:replace="~{layout/frontend :: menu}"></div>
+	</div>-->
+	<main class="container">
+		<h1>Categorias</h1>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Slug</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dato:${datos}">
+					<td th:text="${dato.id}"></td>
+					<td th:text="${dato.nombre}"></td>
+					<td th:text="${dato.slug}"></td>					
+				</tr>
+			</tbody>
+		</table>
+	</main>
+
+	<footer th:replace="~{layout/frontend :: footer}"></footer>
+	<div th:replace="~{layout/frontend :: scripts}"></div>
+</body>
+
+</html>

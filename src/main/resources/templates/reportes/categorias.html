@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>	
+
+</head>
+
+<body>
+
+	<main>
+		<table border="0">
+			<caption>Informacion de las Categorias</caption>
+			<thead>
+				<tr scope="row">
+					<th>ID</th>
+					<th>Nombre</th>
+					<th>Slug</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dato:${datos}" style="background-color: rgb(192, 192, 192)">
+					<td th:text="${dato.id}"></td>
+					<td th:text="${dato.nombre}"></td>
+					<td th:text="${dato.slug}"></td>
+				</tr>
+			</tbody>
+		</table>
+	</main>
+
+</body>
+
+</html>

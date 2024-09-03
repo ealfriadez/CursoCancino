@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{layout/frontend :: head(~{::title}, ~{::link})}">
+	<link th:href="@{/css/estilos.css}" rel="stylesheet">
+	<link rel="stylesheet" type="text/css" th:href="@{/fancybox/jquery.fancybox.css}" />
+</head>
+
+<body>
+
+	<div class="container">
+		<header th:replace="~{layout/frontend :: cabecero}"></header>
+		<div th:replace="~{layout/frontend :: menu}"></div>
+	</div>
+	<main class="container">
+		<h1>Productos paginacion Mongo DB</h1>
+		<div th:if="${mensaje!=null}" th:class="'alert alert-'+${clase}+' alert-dismissible fade show'">
+			<span th:text="${mensaje}"></span>
+			<button th:if="${mensaje!=null}" type="button" class="btn-close" data-bs-dismiss="alert"
+				aria-label="close"></button>
+		</div>
+		<p>
+			<a th:href="@{/jpa-mongodb/productos/add}" class="btn btn-primary">Crear</a>
+		</p>
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Categoria</th>
+					<th>Nombre</th>
+					<th>Slug</th>
+					<th>Descripcion</th>
+					<th>Precio</th>
+					<th>Foto</th>
+					<th>Acciones</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="dato:${datos}">
+					<td th:text="${dato.id}"></td>
+					<td>	
+						<a th:href="@{/jpa-mongodb/productos/categorias/}+${dato.categoriaId.id}" 
+						th:title="${dato.categoriaId.nombre}" th:text="${dato.categoriaId.nombre}"></a>
+					</td>
+					<td th:text="${dato.nombre}"></td>
+					<td th:text="${dato.slug}"></td>
+					<td th:text="${dato.descripcion}"></td>
+					<td th:text="'$'+${#numbers.formatDecimal(dato.precio, 0, 'POINT', 0, 'POINT')}"></td>
+					<td>
+						<a th:href="@{'/local/'}+'productos_image/'+${dato.foto}" class="fancybox">
+							<img th:src="@{'/local/'}+'productos_image/'+${dato.foto}" width="100" height="100"></td>	
+						</a>
+					</td> 
+					<td>
+						<a th:href="@{/jpa-mongodb/productos/edit/}+${dato.id}"><i class="fas fa-edit"></i></a>
+						<a th:href="@{/jpa-repository/categorias/delete/}+${dato.id}"><i class="fas fa-trash"></i></a>
+						<!--<a href="javascript:void(0);" th:onclick="'eliminar(\'/curso_cancino/jpa-repository/productos/delete/'+${dato.id}+'\')'"><i class="fas fa-trash"></i></a>-->
+					</td>
+				</tr>
+			</tbody>
+		</table>
+		<!--<nav th:replace="~{layout/paginacion :: paginacion}"></nav>-->
+		<nav th:insert="~{layout/paginacion :: paginacion}"></nav>
+	</main>
+	
+	<footer th:replace="~{layout/frontend :: footer}"></footer>
+	<div th:replace="~{layout/frontend :: scripts}"></div>	
+	<script type="text/javascript" th:src="@{/fancybox/jquery.fancybox.js}"></script>
+	<script type="text/javascript">
+			$(document).ready(function(){
+				$(".fancybox").fancybox({
+					openEffect  : 'none',
+					closeEffect : 'none',
+				});
+			});
+		</script>
+</body>
+
+</html>
