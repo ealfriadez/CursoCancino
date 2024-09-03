@@ -11,9 +11,7 @@ public class Configuracion implements WebMvcConfigurer{
 	@Value("${elio.valores.ruta_upload}")
 	private String ruta_upload;
 	@Override
-	public void addResourceHandlers(ResourceHandlerRegistry registry) {
-		
-		//WebMvcConfigurer.super.addResourceHandlers(registry);
+	public void addResourceHandlers(ResourceHandlerRegistry registry) {		
 		
 		registry.addResourceHandler("/local/**")
 		.addResourceLocations("file:" + this.ruta_upload + "/productos_image");
